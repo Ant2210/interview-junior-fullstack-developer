@@ -10,35 +10,43 @@
       name="cityName"
       [(ngModel)]="cityName"
       (ngModelChange)="search()"
-      placeholder="City name here..."
+      placeholder="Start typing a city name here..."
       aria-label="City Name"
       aria-describedby="basic-addon1"
     />
   </div>
-  
+
   <div *ngIf="error" class="alert alert-danger" role="alert">
     {{ error }}
   </div>
 
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th class="col-6">City Name</th>
-        <th class="col-6">Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let city of cities | paginate: { itemsPerPage: 5, currentPage: p }">
-        <td class="col-6">{{ city.cityName }}</td>
-        <td class="col-6">{{ city.count }}</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2">
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  
+  <div class="table-container">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="col-6">City Name</th>
+          <th class="col-6">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          (click)="wiki(city.cityName)"
+          *ngFor="
+            let city of cities | paginate : { itemsPerPage: 5, currentPage: p }
+          "
+        >
+          <td class="col-6 clickable">{{ city.cityName }}</td>
+          <td class="col-6 clickable">{{ city.count }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="text-center" id="pagination-row">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </div>

@@ -48,6 +48,10 @@ export class CitiesComponent implements OnDestroy {
     }
   }
 
+  wiki(cityName: string) {
+    window.open(`https://en.wikipedia.org/wiki/${cityName}`, '_blank');
+  }
+
   ngOnDestroy() {
     if (this.citiesSubscription) {
       this.citiesSubscription.unsubscribe();
