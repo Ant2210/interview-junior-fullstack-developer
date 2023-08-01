@@ -24,10 +24,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let city of cities">
+      <tr *ngFor="let city of cities | paginate: { itemsPerPage: 5, currentPage: p }">
         <td class="col-6">{{ city.cityName }}</td>
         <td class="col-6">{{ city.count }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </div>

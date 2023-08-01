@@ -10,6 +10,7 @@ import { City } from '../models/city';
 export class CitiesComponent {
   cities : City[] = [];
   cityName : any;
+  p : number = 1;
 
   constructor(private api: ApiService) { }
 
