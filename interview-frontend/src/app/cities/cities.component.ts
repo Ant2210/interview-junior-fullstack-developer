@@ -11,24 +11,38 @@ export class CitiesComponent {
   cities : City[] = [];
   cityName : any;
   p : number = 1;
+  error: string = '';
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
   ngOnInit() {
     this.getCities();
   }
-  
+
   getCities() {
-    this.api.getCities().subscribe((res) => {
-      this.cities = res;
-    })
+    this.api.getCities().subscribe(
+      (res) => {
+        this.cities = res;
+        this.error = '';
+      },
+      (error) => {
+        this.error = 'Unable to fetch cities. Please try again later.';
+      }
+    );
   }
 
   search() {
-    if(this.cityName == '') {
-      this.ngOnInit();
-    } else this.cities = this.cities.filter(res => {
-      return res.cityName.toLocaleLowerCase().match(this.cityName.toLocaleLowerCase());
-    })
+    this.error = '';
+    if (this.cityName === '') {
+      this.getCities();
+    } else {
+      this.cities = this.cities.filter((res) => {
+        return res.cityName.toLowerCase().includes(this.cityName.toLowerCase());
+      });
+
+      if (this.cities.length === 0) {
+        this.error = 'No matching cities found.';
+      }
+    }
   }
 }
