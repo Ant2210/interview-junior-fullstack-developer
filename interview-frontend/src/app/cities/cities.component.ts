@@ -9,6 +9,7 @@ import { City } from '../models/city';
 })
 export class CitiesComponent {
   cities : City[] = [];
+  cityName : any;
 
   constructor(private api: ApiService) { }
 
@@ -19,7 +20,14 @@ export class CitiesComponent {
   getCities() {
     this.api.getCities().subscribe((res) => {
       this.cities = res;
-      console.log(res);
+    })
+  }
+
+  search() {
+    if(this.cityName == '') {
+      this.ngOnInit();
+    } else this.cities = this.cities.filter(res => {
+      return res.cityName.toLocaleLowerCase().match(this.cityName.toLocaleLowerCase());
     })
   }
 }

@@ -8,6 +8,8 @@
       type="text"
       class="form-control"
       name="cityName"
+      [(ngModel)]="cityName"
+      (ngModelChange)="search()"
       placeholder="City name here..."
       aria-label="City Name"
       aria-describedby="basic-addon1"
