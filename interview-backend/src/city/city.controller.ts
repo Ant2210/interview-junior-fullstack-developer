@@ -1,4 +1,13 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { CityService } from './city.service';
+import { City } from './schemas/city.schema';
 
-@Controller('city')
-export class CityController {}
+@Controller('cities')
+export class CityController {
+  constructor(private cityService: CityService) {}
+
+  @Get()
+  async getAllCities(): Promise<City[]> {
+    return this.cityService.findAll();
+  }
+}
