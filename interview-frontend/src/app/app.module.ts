@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CitiesComponent } from './cities/cities.component';
+import { NgxBootstrapIconsModule } from 'ngx-bootstrap-icons'
+import { search } from 'ngx-bootstrap-icons';
+
+const icons = { search }
 
 @NgModule({
   declarations: [
@@ -14,7 +18,8 @@ import { CitiesComponent } from './cities/cities.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxBootstrapIconsModule.pick(icons),
   ],
   providers: [],
   bootstrap: [AppComponent]
