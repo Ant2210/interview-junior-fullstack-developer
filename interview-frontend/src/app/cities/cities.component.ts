@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { City } from '../models/city';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cities',
   templateUrl: './cities.component.html',
   styleUrls: ['./cities.component.scss']
 })
-export class CitiesComponent {
-  cities : City[] = [];
-  cityName : any;
-  p : number = 1;
+export class CitiesComponent implements OnDestroy {
+  cities: City[] = [];
+  cityName: string = '';
+  p: number = 1;
   error: string = '';
+  private citiesSubscription: Subscription | undefined;
 
   constructor(private api: ApiService) {}
 
@@ -20,13 +22,13 @@ export class CitiesComponent {
   }
 
   getCities() {
-    this.api.getCities().subscribe(
+    this.citiesSubscription = this.api.getCities().subscribe(
       (res) => {
         this.cities = res;
         this.error = '';
       },
       (error) => {
-        this.error = 'Unable to fetch cities. Please try again later.';
+        this.error = "Unable to fetch cities. Sorry it's not you, it's us! Please try again later.";
       }
     );
   }
@@ -43,6 +45,12 @@ export class CitiesComponent {
       if (this.cities.length === 0) {
         this.error = 'No matching cities found.';
       }
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.citiesSubscription) {
+      this.citiesSubscription.unsubscribe();
     }
   }
 }
